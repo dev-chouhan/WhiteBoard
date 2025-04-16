@@ -124,6 +124,6 @@ nextApp.prepare().then(async () => {
     app.all("*", (req, res) => nextHandler(req, res));
     server.listen(port, () => {
         // eslint-disable-next-line no-console
-        console.log(`> Ready on http://localhost:${port}`);
+        console.log(`> Hosted over: http://localhost:${port}`);
     });
 });
