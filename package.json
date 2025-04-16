@@ -13,7 +13,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "express": "^4.17.3",
+    "express": "^4.21.2",
     "framer-motion": "^6.3.3",
     "next": "latest",
     "react": "^17.0.2",
@@ -24,7 +24,7 @@
     "react-toastify": "^9.0.3",
     "react-use": "^17.3.2",
     "recoil": "^0.7.3-alpha.2",
-    "socket.io": "^4.5.0",
+    "socket.io": "^4.8.1",
     "socket.io-client": "^4.5.0",
     "uuid": "^8.3.2"
   },
