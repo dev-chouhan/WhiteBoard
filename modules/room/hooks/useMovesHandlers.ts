@@ -76,8 +76,11 @@ export const useMovesHandlers = (clearOnYourMove: () => void) => {
       ctx.globalCompositeOperation = "destination-out";
     else ctx.globalCompositeOperation = "source-over";
 
-    if (moveOptions.shape === "image" && image)
-      ctx.drawImage(image, path[0][0], path[0][1]);
+    if (moveOptions.shape === "image" && image && move.img) {
+      const width = move.img.width || image.width;
+      const height = move.img.height || image.height;
+      ctx.drawImage(image, path[0][0], path[0][1], width, height);
+    }
 
     switch (moveOptions.shape) {
       case "line": {
@@ -92,26 +95,28 @@ export const useMovesHandlers = (clearOnYourMove: () => void) => {
       }
 
       case "circle": {
-        const { cX, cY, radiusX, radiusY } = move.circle;
+        if (move.circle) {
+          const { cX, cY, radiusX, radiusY } = move.circle;
 
-        ctx.beginPath();
-        ctx.ellipse(cX, cY, radiusX, radiusY, 0, 0, 2 * Math.PI);
-        ctx.stroke();
-        ctx.fill();
-        ctx.closePath();
+          ctx.beginPath();
+          ctx.ellipse(cX, cY, radiusX, radiusY, 0, 0, 2 * Math.PI);
+          ctx.stroke();
+          ctx.fill();
+          ctx.closePath();
+        }
         break;
       }
 
       case "rect": {
-        const { width, height } = move.rect;
+        if (move.rect) {
+          const { width, height } = move.rect;
 
-        ctx.beginPath();
-
-        ctx.rect(path[0][0], path[0][1], width, height);
-        ctx.stroke();
-        ctx.fill();
-
-        ctx.closePath();
+          ctx.beginPath();
+          ctx.rect(path[0][0], path[0][1], width, height);
+          ctx.stroke();
+          ctx.fill();
+          ctx.closePath();
+        }
         break;
       }
 
@@ -129,11 +134,11 @@ export const useMovesHandlers = (clearOnYourMove: () => void) => {
 
     const images = await Promise.all(
       sortedMoves
-        .filter((move) => move.options.shape === "image")
+        .filter((move) => move.options.shape === "image" && move.img)
         .map((move) => {
           return new Promise<HTMLImageElement>((resolve) => {
             const img = new Image();
-            img.src = move.img.base64;
+            img.src = move.img!.base64;
             img.id = move.id;
             img.addEventListener("load", () => resolve(img));
           });
@@ -141,7 +146,7 @@ export const useMovesHandlers = (clearOnYourMove: () => void) => {
     );
 
     sortedMoves.forEach((move) => {
-      if (move.options.shape === "image") {
+      if (move.options.shape === "image" && move.img) {
         const img = images.find((image) => image.id === move.id);
         if (img) drawMove(move, img);
       } else drawMove(move);
@@ -170,7 +175,7 @@ export const useMovesHandlers = (clearOnYourMove: () => void) => {
     } else {
       const lastMove = sortedMoves[sortedMoves.length - 1];
 
-      if (lastMove.options.shape === "image") {
+      if (lastMove.options.shape === "image" && lastMove.img) {
         const img = new Image();
         img.src = lastMove.img.base64;
         img.addEventListener("load", () => drawMove(lastMove, img));

@@ -19,23 +19,37 @@ export declare global {
   }
 
   interface Move {
-    circle: {
+    id: string;
+    path: [number, number][];
+    options: {
+      shape: Shape;
+      mode: "draw" | "eraser" | "select";
+      lineWidth: number;
+      lineColor: RgbaColor;
+      fillColor: RgbaColor;
+      selection: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+      } | null;
+    };
+    circle?: {
       cX: number;
       cY: number;
       radiusX: number;
       radiusY: number;
     };
-    rect: {
+    rect?: {
       width: number;
       height: number;
     };
-    img: {
+    img?: {
       base64: string;
+      width?: number;
+      height?: number;
     };
-    path: [number, number][];
-    options: CtxOptions;
     timestamp: number;
-    id: string;
   }
 
   type Room = {
