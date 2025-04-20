@@ -12,7 +12,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Head>
-        <title>MindSlate | A collabrative Whiteboard</title>
+        <title>Digiboard | A Real-time Whiteboard</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <RecoilRoot>
