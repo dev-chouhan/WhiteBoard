@@ -25,3 +25,6 @@ The Digiboard Project aims to create a digital whiteboard application that allow
 
 ## For localtunnling
 - lt --port 3000
+
+## Video link of Running project
+- https://drive.google.com/file/d/1Fxt624Bj7EJMWKSRgfGQcMle0p2k6rJl/view?usp=sharing
